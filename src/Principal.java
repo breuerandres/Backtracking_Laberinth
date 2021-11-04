@@ -7,14 +7,35 @@ public class Principal {
 
 	ResolverLaberintoImplementacion resolverProblema = new ResolverLaberintoImplementacion();
 	
-	//Obtener éstos valores por pantalla, se inicializan para que compile 
-	int origenX=0;
+	//Obtener estos valores por pantalla, se inicializan para que compile
+	int origenX=1;
 	int origenY=0;
-	int destX=0;
-	int destY=0;
-	int [][] tablero = new int[3][4];
-	
-	
+	int destX=3;
+	int destY=3;
+
+	int [][] tablero = new int[4][5];
+	tablero[0][0] = 3;
+		tablero[0][0] = 3;
+		tablero[0][1] = 2;
+		tablero[0][2] = 1;
+		tablero[0][3] = 3;
+		tablero[0][4] = 1;
+		tablero[1][0] = 5;
+		tablero[1][1] = -1;
+		tablero[1][2] = 4;
+		tablero[1][3] = -1;
+		tablero[1][4] = 2;
+		tablero[2][0] = -1;
+		tablero[2][1] = 8;
+		tablero[2][2] = 4;
+		tablero[2][3] = 5;
+		tablero[2][4] = 1;
+		tablero[3][0] = 5;
+		tablero[3][1] = 6;
+		tablero[3][2] = -1;
+		tablero[3][3] = 2;
+		tablero[3][4] = -1;
+
     ArrayList<Posicion> resultado = resolverProblema.resolverLaberinto(tablero, origenX, origenY, destX, destY);
     imprimirResultado(resultado);
 

@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Posicion {
     int x;
     int y;
@@ -13,28 +15,17 @@ public class Posicion {
         this.x = x;
         this. y = y;
     }
-
-    public int getX() {
-        return this.x;
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Posicion posicion = (Posicion) o;
+        return x == posicion.x && y == posicion.y && valor == posicion.valor;
     }
 
-    public int getY() {
-        return this.y;
-    }
-
-    public void setX(int posX) {
-        this.x = posX;
-    }
-
-    public void setY(int posY) {
-        this.y = posY;
-    }
-
-    public int getValor() {
-        return this.valor;
-    }
-
-    public void setValor(int v) {
-        this.valor = v;
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y, valor);
     }
 }
