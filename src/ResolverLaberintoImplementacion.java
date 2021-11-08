@@ -36,6 +36,7 @@ public class ResolverLaberintoImplementacion implements ResolverLaberintoInterfa
         for (Posicion adyacente : adyacentes) {
             ArrayList<Posicion> resultado = busqueda(tabla, adyacente.x, adyacente.y, finX, finY, acumulado, max, new ArrayList<>(recorridos));
             if (resultado.size() == 0) continue;
+
             int valorResultado = resultado.stream().reduce(0, (subtotal, posicion) -> subtotal + posicion.valor, Integer::sum);
 
             if (valorResultado < max) {
@@ -52,6 +53,7 @@ public class ResolverLaberintoImplementacion implements ResolverLaberintoInterfa
         if (pos.equals(finalPos)) {
             return candidatos;
         }
+
         for (Posicion p : posicionesAdyacentes) {
             int xAdyacente = pos.x + p.x;
             int yAdyacente = pos.y + p.y;
