@@ -4,9 +4,26 @@ import java.util.List;
 
 public class ResolverLaberintoImplementacion implements ResolverLaberintoInterface {
 
-    private final List<Posicion> posicionesAdyacentes = Arrays.asList(new Posicion(1, 1), new Posicion(1, 0), new Posicion(0, 1),
-            new Posicion(-1, -1), new Posicion(-1, 0), new Posicion(0, -1),
-            new Posicion(1, -1), new Posicion(-1, 1));
+    private Posicion crearPosicion(int x, int y) {
+        Posicion pos = new Posicion();
+        pos.x = x;
+        pos.y = y;
+
+        return pos;
+    }
+
+    private Posicion crearPosicion(int x, int y, int valor) {
+        Posicion pos = new Posicion();
+        pos.x = x;
+        pos.y = y;
+        pos.valor = valor;
+
+        return pos;
+    }
+
+    private final List<Posicion> posicionesAdyacentes = Arrays.asList(crearPosicion(1, 1), crearPosicion(1, 0), crearPosicion(0, 1),
+            crearPosicion(-1, -1), crearPosicion(-1, 0), crearPosicion(0, -1),
+            crearPosicion(1, -1), crearPosicion(-1, 1));
 
     @Override
     public ArrayList<Posicion> resolverLaberinto(int[][] tabla, int xi, int yi, int xf, int yf) {
@@ -14,12 +31,12 @@ public class ResolverLaberintoImplementacion implements ResolverLaberintoInterfa
     }
 
     private ArrayList<Posicion> busqueda(int[][] tabla, int inicioX, int inicioY, int finX, int finY, int acumulado, int max, ArrayList<Posicion> recorridos) {
-        Posicion actual = new Posicion(inicioX, inicioY, tabla[inicioX][inicioY]);
-        Posicion fin = new Posicion(finX, finY, tabla[finX][finY]);
+        Posicion actual = crearPosicion(inicioX, inicioY, tabla[inicioX][inicioY]);
+        Posicion fin = crearPosicion(finX, finY, tabla[finX][finY]);
 
         recorridos.add(actual);
 
-        if (actual.equals(fin)) {
+        if (posicionesIguales(actual, fin)) {
             return recorridos;
         }
 
@@ -50,7 +67,7 @@ public class ResolverLaberintoImplementacion implements ResolverLaberintoInterfa
     private ArrayList<Posicion> obtenerAdyacentes(Posicion pos, ArrayList<Posicion> recorridos, int[][] tabla, Posicion finalPos) {
         ArrayList<Posicion> candidatos = new ArrayList<>();
 
-        if (pos.equals(finalPos)) {
+        if (posicionesIguales(pos, finalPos)) {
             return candidatos;
         }
 
@@ -59,7 +76,7 @@ public class ResolverLaberintoImplementacion implements ResolverLaberintoInterfa
             int yAdyacente = pos.y + p.y;
 
             if (valido(xAdyacente, yAdyacente, recorridos, tabla)) {
-                candidatos.add(new Posicion(xAdyacente, yAdyacente, tabla[xAdyacente][yAdyacente]));
+                candidatos.add(crearPosicion(xAdyacente, yAdyacente, tabla[xAdyacente][yAdyacente]));
             }
         }
 
@@ -70,9 +87,13 @@ public class ResolverLaberintoImplementacion implements ResolverLaberintoInterfa
         try {
             int valor = tabla[x][y];
 
-            return !recorridos.stream().anyMatch(new Posicion(x, y, valor)::equals) && valor != -1;
+            return !recorridos.stream().anyMatch(posicionRecorrida -> posicionesIguales(crearPosicion(x, y, valor), posicionRecorrida)) && valor != -1;
         } catch (ArrayIndexOutOfBoundsException error) {
             return false;
         }
+    }
+
+    private boolean posicionesIguales(Posicion pos1, Posicion pos2) {
+        return pos1 == pos2 || pos1.y == pos2.y && pos1.x == pos2.x;
     }
 }
